@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "tutorial:counter"
+    },
+    "inventory": {
+      "model": "tutorial:counter",
+      "transform": "forge:default-block"
+    }
+  }
+}
