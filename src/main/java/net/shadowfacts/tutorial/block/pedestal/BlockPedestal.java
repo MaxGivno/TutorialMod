@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 
-    protected static final AxisAlignedBB PEDESTAL_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.8125D, 0.9375D);
+    private static final AxisAlignedBB PEDESTAL_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.8125D, 0.9375D);
 
     public BlockPedestal() {
         super(Material.ROCK, "pedestal");
@@ -42,29 +42,30 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        state.getBoundingBox(source, pos);
         return PEDESTAL_AABB;
     }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
-            TileEntityPedestal tile = getTileEntity(world, pos);
-            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
-            if (!player.isSneaking()) {
-                if (heldItem == null) {
-                    player.setHeldItem(hand, itemHandler.extractItem(0, 64, false));
-                } else {
-                    player.setHeldItem(hand, itemHandler.insertItem(0, heldItem, false));
+        if (!world.isRemote) { // On Server
+            TileEntityPedestal tile = getTileEntity(world, pos); // Get TE
+            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side); // Attaching handler for inventory support
+
+            if (!player.isSneaking()) { // If not sneaking
+                if (heldItem == null) { // with empty hand
+                    player.setHeldItem(hand, itemHandler.extractItem(0, 64, false)); // Get items from the slot
+                } else { // Hand's not empty
+                    player.setHeldItem(hand, itemHandler.insertItem(0, heldItem, false));  // Put items into the slot
                 }
-                tile.markDirty();
-            } else {
-                ItemStack stack = itemHandler.getStackInSlot(0);
-                if (stack != null) {
-                    String localized = TutorialMod.proxy.localize(stack.getUnlocalizedName() + ".name");
-                    player.addChatMessage(new TextComponentString(stack.stackSize + "x " + localized));
-                } else {
-                    player.addChatMessage(new TextComponentString("Empty"));
+                tile.markDirty(); // Update TE
+            } else { // If sneaking
+                ItemStack stack = itemHandler.getStackInSlot(0); // Check what's in slot 0
+
+                if (stack != null) { // If smth in the slot
+                    String localized = TutorialMod.proxy.localize(stack.getUnlocalizedName() + ".name"); // Get name of item in the slot
+                    player.addChatMessage(new TextComponentString(stack.stackSize + "x " + localized)); // Write to chat number of items in the slot
+                } else { // If slot is empty
+                    player.addChatMessage(new TextComponentString("Empty")); // Write to chat that slot is empty
                 }
             }
         }

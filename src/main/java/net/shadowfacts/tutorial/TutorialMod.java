@@ -15,24 +15,22 @@ import net.shadowfacts.tutorial.client.TutorialTab;
 import net.shadowfacts.tutorial.item.ModItems;
 import net.shadowfacts.tutorial.proxy.CommonProxy;
 import net.shadowfacts.tutorial.recipe.ModRecipes;
+import net.shadowfacts.tutorial.reference.ModInfo;
 import net.shadowfacts.tutorial.world.ModWorldGen;
 
-@Mod(modid = TutorialMod.modId, name = TutorialMod.name, version = TutorialMod.version, acceptedMinecraftVersions = "[1.10.2]")
+@Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION, acceptedMinecraftVersions = ModInfo.MC_VERSION)
 public class TutorialMod {
 
-    public static final String modId = "tutorial";
-    public static final String name = "Tutorial Mod";
-    public static final String version = "1.0.0";
     public static final TutorialTab creativeTab = new TutorialTab();
     public static final Item.ToolMaterial copperToolMaterial = EnumHelper.addToolMaterial("COPPER", 2, 500, 6, 2, 14);
-    public static final ItemArmor.ArmorMaterial copperArmorMaterial = EnumHelper.addArmorMaterial("COPPER", modId + ":copper", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+    public static final ItemArmor.ArmorMaterial copperArmorMaterial = EnumHelper.addArmorMaterial("COPPER", ModInfo.MOD_ID + ":copper", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
-    @Mod.Instance(modId)
+    @Mod.Instance(ModInfo.MOD_ID)
     public static TutorialMod instance;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        System.out.println(name + " is loading!");
+        System.out.println(ModInfo.MOD_NAME + " is loading!");
         ModBlocks.init();
         ModItems.init();
         GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
@@ -48,7 +46,7 @@ public class TutorialMod {
 
     }
 
-    @SidedProxy(serverSide = "net.shadowfacts.tutorial.proxy.CommonProxy", clientSide = "net.shadowfacts.tutorial.proxy.ClientProxy")
+    @SidedProxy(serverSide = ModInfo.SERVER_SIDE_CLASS, clientSide = ModInfo.CLIENT_SIDE_CLASS)
     public static CommonProxy proxy;
 
 }
