@@ -3,6 +3,7 @@ package net.shadowfacts.tutorial.item;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.shadowfacts.tutorial.TutorialMod;
+import net.shadowfacts.tutorial.reference.ModInfo;
 
 public class ItemBase extends Item implements ItemModelProvider {
 
@@ -11,7 +12,7 @@ public class ItemBase extends Item implements ItemModelProvider {
     public ItemBase(String name) {
         this.name = name;
         setUnlocalizedName(name);
-        setRegistryName(name);
+        setRegistryName(ModInfo.MOD_ID, name);
         setCreativeTab(TutorialMod.creativeTab);
     }
 
