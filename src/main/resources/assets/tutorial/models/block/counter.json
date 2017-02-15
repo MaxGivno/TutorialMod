@@ -1,6 +1,6 @@
 {
     "textures": {
-        "0": "tutorial:blocks/counter",
+        "0": "tutorial:blocks/counter_side",
         "1": "tutorial:blocks/counter_top",
         "2": "tutorial:blocks/counter_bottom",
         "particle": "tutorial:blocks/counter"
