@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "tutorial:pChest"
+    },
+    "inventory": {
+      "model": "tutorial:pChest",
+      "transform": "forge:default-block"
+    }
+  }
+}
