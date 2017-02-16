@@ -52,7 +52,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
             IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side); // Attaching handler for inventory support
 
             if (!player.isSneaking()) { // If not sneaking
-                if (heldItem == null) { // with empty hand
+                if (heldItem == null) { // with empty hand TODO: for 10.11 change this to heldItem.isEmpty
                     player.setHeldItem(hand, itemHandler.extractItem(0, 64, false)); // Get items from the slot
                 } else { // Hand's not empty
                     player.setHeldItem(hand, itemHandler.insertItem(0, heldItem, false));  // Put items into the slot
@@ -61,7 +61,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
             } else { // If sneaking
                 ItemStack stack = itemHandler.getStackInSlot(0); // Check what's in slot 0
 
-                if (stack != null) { // If smth in the slot
+                if (stack != null) { // If smth in the slot TODO: for 10.11 change this to !stack.isEmpty
                     String localized = TutorialMod.proxy.localize(stack.getUnlocalizedName() + ".name"); // Get name of item in the slot
                     player.addChatMessage(new TextComponentString(stack.stackSize + "x " + localized)); // Write to chat number of items in the slot
                 } else { // If slot is empty
@@ -77,7 +77,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         TileEntityPedestal tile = getTileEntity(world, pos);
         IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
         ItemStack stack = itemHandler.getStackInSlot(0);
-        if (stack != null) {
+        if (stack != null) { // TODO: for 10.11 change this to !stack.isEmpty
             EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
             world.spawnEntityInWorld(item);
         }
