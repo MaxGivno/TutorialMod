@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.shadowfacts.tutorial.block.counter.BlockCounter;
 import net.shadowfacts.tutorial.block.pedestal.BlockPedestal;
+import net.shadowfacts.tutorial.block.projectChest.BlockProjectChest;
 import net.shadowfacts.tutorial.item.ItemModelProvider;
 import net.shadowfacts.tutorial.item.ItemOreDict;
 
@@ -14,12 +15,14 @@ public class ModBlocks {
     public static BlockCropCorn cropCorn;
     public static BlockPedestal pedestal;
     public static BlockCounter counter;
+    public static BlockProjectChest projectChest;
 
     public static void init() {
         oreCopper = register(new BlockOre("oreCopper", "oreCopper"));
         cropCorn = register(new BlockCropCorn(), null);
         pedestal = register(new BlockPedestal());
         counter = register(new BlockCounter());
+        projectChest = register(new BlockProjectChest());
     }
 
     private static <T extends Block> T register(T block, ItemBlock itemBlock) {
