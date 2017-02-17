@@ -5,18 +5,20 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.shadowfacts.tutorial.TutorialMod;
 import net.shadowfacts.tutorial.block.BlockTileEntity;
 
 import javax.annotation.Nullable;
 
 public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
+
+    public static final int GUI_ID = 1;
 
     public BlockProjectChest() {
         super(Material.WOOD, "projectChest");
@@ -25,14 +27,14 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            TileEntityProjectChest tile = getTileEntity(world, pos); // Get TE
-            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side); // Attaching handler for inventory support
+            TileEntityProjectChest te = getTileEntity(world, pos);
 
-//            if (tile != null)
-//            {
-//                player.displayGUIChest(itemHandler);
-//                player.addStat(StatList.CHEST_OPENED);
-//            }
+            if (!(te instanceof TileEntityProjectChest)) {
+                return false;
+            }
+
+            player.openGui(TutorialMod.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+            return true;
         }
         return true;
     }

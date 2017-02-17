@@ -1,5 +1,6 @@
 package net.shadowfacts.tutorial.block.projectChest;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,7 +13,16 @@ import javax.annotation.Nullable;
 
 public class TileEntityProjectChest extends TileEntity {
 
-    private ItemStackHandler inventory = new ItemStackHandler(27);
+    public static final int SIZE = 54;
+
+    private ItemStackHandler inventory = new ItemStackHandler(SIZE) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            // We need to tell the tile entity that something has changed so
+            // that the chest contents is persisted
+            TileEntityProjectChest.this.markDirty();
+        }
+    };
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -36,5 +46,9 @@ public class TileEntityProjectChest extends TileEntity {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T)inventory : super.getCapability(capability, facing);
     }
 
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        // If we are too far away from this tile entity you cannot use it
+        return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+    }
 
 }
