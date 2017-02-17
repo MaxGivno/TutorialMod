@@ -29,7 +29,7 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
         if (!world.isRemote) {
             TileEntityProjectChest te = getTileEntity(world, pos);
 
-            if (!(te instanceof TileEntityProjectChest)) {
+            if (te == null) {
                 return false;
             }
 
