@@ -5,6 +5,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -18,7 +19,7 @@ public class ContainerProjectChest extends Container {
     public ContainerProjectChest(IInventory playerInv, TileEntityProjectChest te) {
         this.te = te;
 
-        addOwnSlots();
+        addContainerSlots();
         addPlayerSlots(playerInv);
     }
 
@@ -43,17 +44,21 @@ public class ContainerProjectChest extends Container {
         }
     }
 
-    private void addOwnSlots() {
+    private void addContainerSlots() {
         IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int x = 8;
-        int y = 18;
+        int deltaX = 8;
+        int deltaY = 18;
+        int rowMax = itemHandler.getSlots()/9;
 
-        // Add our own slots
+        // Add our container slots
         int slotIndex = 0;
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-            slotIndex++;
-            x += 18;
+        for (int row =0; row < rowMax; ++row) {
+            for (int col =0; col < 9; ++col) {
+                int x = deltaX + col * 18;
+                int y = row * 18 + deltaY;
+                addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
+                slotIndex++;
+            }
         }
     }
 
@@ -67,11 +72,11 @@ public class ContainerProjectChest extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (index < this.te.SIZE) {
-                if (!this.mergeItemStack(itemstack1, this.te.SIZE, this.inventorySlots.size(), true)) {
+            if (index < this.te.getSize()) {
+                if (!this.mergeItemStack(itemstack1, this.te.getSize(), this.inventorySlots.size(), true)) {
                     return null;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, this.te.SIZE, false)) {
+            } else if (!this.mergeItemStack(itemstack1, 0, this.te.getSize(), false)) {
                 return null;
             }
 
