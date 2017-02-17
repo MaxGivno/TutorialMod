@@ -6,8 +6,8 @@ import net.shadowfacts.tutorial.reference.ModInfo;
 
 public class GuiProjectChest extends GuiContainer {
 
-    public static final int WIDTH = 176;
-    public static final int HEIGHT = 222;
+    private static final int WIDTH = 176;
+    private static final int HEIGHT = 222;
 
     private static final ResourceLocation background = new ResourceLocation(ModInfo.MOD_ID, "textures/gui/containerProjectChest.png");
 

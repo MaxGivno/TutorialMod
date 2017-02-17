@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
 
-    public static final int GUI_ID = 1;
+    private static final int GUI_ID = 1;
 
     public BlockProjectChest() {
         super(Material.WOOD, "projectChest");

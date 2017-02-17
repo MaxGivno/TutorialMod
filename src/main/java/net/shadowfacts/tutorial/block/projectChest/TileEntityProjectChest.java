@@ -1,7 +1,6 @@
 package net.shadowfacts.tutorial.block.projectChest;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -13,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class TileEntityProjectChest extends TileEntity {
 
-    public static final int SIZE = 54;
+    static final int SIZE = 54;
 
     private ItemStackHandler inventory = new ItemStackHandler(SIZE) {
         @Override
