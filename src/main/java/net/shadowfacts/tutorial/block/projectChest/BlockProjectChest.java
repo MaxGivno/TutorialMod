@@ -28,11 +28,11 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
             TileEntityProjectChest tile = getTileEntity(world, pos); // Get TE
             IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side); // Attaching handler for inventory support
 
-            if (tile != null)
-            {
-                player.displayGUIChest(itemHandler);
-                player.addStat(StatList.CHEST_OPENED);
-            }
+//            if (tile != null)
+//            {
+//                player.displayGUIChest(itemHandler);
+//                player.addStat(StatList.CHEST_OPENED);
+//            }
         }
         return true;
     }

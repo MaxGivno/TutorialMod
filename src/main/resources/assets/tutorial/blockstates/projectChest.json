@@ -2,10 +2,10 @@
   "forge_marker": 1,
   "variants": {
     "normal": {
-      "model": "tutorial:pChest"
+      "model": "tutorial:projectChest"
     },
     "inventory": {
-      "model": "tutorial:pChest",
+      "model": "tutorial:projectChest",
       "transform": "forge:default-block"
     }
   }

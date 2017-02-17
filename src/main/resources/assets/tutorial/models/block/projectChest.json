@@ -1,9 +1,10 @@
 {
     "textures": {
-        "0": "blocks/pChest_sideNS",
-        "1": "blocks/pChest_sideEW",
-        "2": "blocks/pChest_top",
-        "3": "blocks/pChest_bottom"
+        "0": "tutorial:blocks/pChest_sideNS",
+        "1": "tutorial:blocks/pChest_sideEW",
+        "2": "tutorial:blocks/pChest_top",
+        "3": "tutorial:blocks/pChest_bottom",
+        "particle": "tutorial:blocks/pChest_sideNS"
     },
     "elements": [
         {
