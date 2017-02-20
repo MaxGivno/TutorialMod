@@ -27,7 +27,8 @@ public class ModGuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileEntityProjectChest) {
             TileEntityProjectChest containerTileEntity = (TileEntityProjectChest) te;
-            return new GuiProjectChest(containerTileEntity, new ContainerProjectChest(player.inventory, containerTileEntity));
+            //return new GuiProjectChest(containerTileEntity, new ContainerProjectChest(player.inventory, containerTileEntity));
+            return new GuiProjectChest(new ContainerProjectChest(player.inventory, containerTileEntity));
         }
         return null;
     }

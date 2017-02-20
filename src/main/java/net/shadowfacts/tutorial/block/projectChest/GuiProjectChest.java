@@ -9,9 +9,16 @@ public class GuiProjectChest extends GuiContainer {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 222;
 
-    private static final ResourceLocation background = new ResourceLocation(ModInfo.MOD_ID, "textures/gui/containerProjectChest.png");
+    private static final ResourceLocation background = new ResourceLocation(ModInfo.MOD_ID, "textures/gui/container_project_chest.png");
 
-    public GuiProjectChest(TileEntityProjectChest tileEntity, ContainerProjectChest container) {
+//    public GuiProjectChest(TileEntityProjectChest tileEntity, ContainerProjectChest container) {
+//        super(container);
+//
+//        xSize = WIDTH;
+//        ySize = HEIGHT;
+//    }
+
+    public GuiProjectChest( ContainerProjectChest container) {
         super(container);
 
         xSize = WIDTH;

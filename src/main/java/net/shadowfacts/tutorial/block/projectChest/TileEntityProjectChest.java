@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class TileEntityProjectChest extends TileEntity {
 
-    static final int SIZE = 54;
+    static final int SIZE = 36;
 
     private ItemStackHandler inventory = new ItemStackHandler(SIZE) {
         @Override

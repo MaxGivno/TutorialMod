@@ -21,7 +21,8 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
     private static final int GUI_ID = 1;
 
     public BlockProjectChest() {
-        super(Material.WOOD, "projectChest");
+        super(Material.WOOD, "project_chest");
+        blockHardness = 3;
     }
 
     @Override

@@ -16,6 +16,6 @@ item.copperBoots.name=Copper Boots
 tile.oreCopper.name=Copper Ore
 tile.pedestal.name=Pedestal
 tile.counter.name=Counter
-tile.projectChest.name=Project Chest
+tile.project_chest.name=Project Chest
 
 itemGroup.tutorial=Tutorial Mod

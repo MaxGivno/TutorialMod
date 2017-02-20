@@ -5,7 +5,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -32,7 +31,7 @@ public class ContainerProjectChest extends Container {
             for (int col = 0; col < 9; ++col) {
                 int x = deltaX + col * 18;
                 int y = row * 18 + deltaY;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
+                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
             }
         }
 
@@ -47,7 +46,7 @@ public class ContainerProjectChest extends Container {
     private void addContainerSlots() {
         IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         int deltaX = 8;
-        int deltaY = 18;
+        int deltaY = 54;
         int rowMax = itemHandler.getSlots()/9;
 
         // Add our container slots
