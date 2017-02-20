@@ -3,7 +3,7 @@ package net.shadowfacts.tutorial.item;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.shadowfacts.tutorial.TutorialMod;
-import net.shadowfacts.tutorial.reference.ModInfo;
+import net.shadowfacts.tutorial.ModInfo;
 
 public class ItemBase extends Item implements ItemModelProvider {
 

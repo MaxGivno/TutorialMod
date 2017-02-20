@@ -2,7 +2,7 @@ package net.shadowfacts.tutorial.block.projectChest;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
-import net.shadowfacts.tutorial.reference.ModInfo;
+import net.shadowfacts.tutorial.ModInfo;
 
 public class GuiProjectChest extends GuiContainer {
 

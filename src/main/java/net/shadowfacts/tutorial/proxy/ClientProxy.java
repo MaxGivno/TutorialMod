@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.shadowfacts.tutorial.reference.ModInfo;
+import net.shadowfacts.tutorial.ModInfo;
 
 public class ClientProxy extends CommonProxy {
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.shadowfacts.tutorial.TutorialMod;
 import net.shadowfacts.tutorial.item.ItemModelProvider;
-import net.shadowfacts.tutorial.reference.ModInfo;
+import net.shadowfacts.tutorial.ModInfo;
 
 public class BlockBase extends Block implements ItemModelProvider {
 

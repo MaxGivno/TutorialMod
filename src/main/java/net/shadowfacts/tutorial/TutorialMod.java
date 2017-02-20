@@ -17,10 +17,9 @@ import net.shadowfacts.tutorial.gui.ModGuiHandler;
 import net.shadowfacts.tutorial.item.ModItems;
 import net.shadowfacts.tutorial.proxy.CommonProxy;
 import net.shadowfacts.tutorial.recipe.ModRecipes;
-import net.shadowfacts.tutorial.reference.ModInfo;
 import net.shadowfacts.tutorial.world.ModWorldGen;
 
-@Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION, acceptedMinecraftVersions = ModInfo.MC_VERSION)
+@Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION, acceptedMinecraftVersions = ModInfo.MINECRAFT_VERSION)
 public class TutorialMod {
 
     public static final TutorialTab creativeTab = new TutorialTab();

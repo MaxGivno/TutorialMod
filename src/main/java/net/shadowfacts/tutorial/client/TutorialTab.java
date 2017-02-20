@@ -3,7 +3,7 @@ package net.shadowfacts.tutorial.client;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.shadowfacts.tutorial.item.ModItems;
-import net.shadowfacts.tutorial.reference.ModInfo;
+import net.shadowfacts.tutorial.ModInfo;
 
 public class TutorialTab extends CreativeTabs {
 
