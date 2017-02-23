@@ -1,9 +1,7 @@
 package net.shadowfacts.tutorial.block.projectChest;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -47,10 +45,14 @@ public class ContainerProjectChest extends Container {
         IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         int deltaX = 8;
         int deltaY = 54;
-        int rowMax = itemHandler.getSlots()/9;
+        int rowMax = (int) Math.floor(itemHandler.getSlots()/9);
 
         // Add our container slots
         int slotIndex = 0;
+
+        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, 80, 18));
+        slotIndex++;
+
         for (int row =0; row < rowMax; ++row) {
             for (int col =0; col < 9; ++col) {
                 int x = deltaX + col * 18;
