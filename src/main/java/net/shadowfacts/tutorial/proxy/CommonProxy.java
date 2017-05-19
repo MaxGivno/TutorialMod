@@ -15,4 +15,6 @@ public class CommonProxy {
         return text.getFormattedText();
     }
 
+    public void registerRenderers() {}
+
 }
