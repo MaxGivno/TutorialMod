@@ -1,11 +1,9 @@
 package net.shadowfacts.tutorial.block.pedestal;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,8 +15,6 @@ import net.shadowfacts.tutorial.network.PacketUpdatePedestal;
 import javax.annotation.Nullable;
 
 public class TileEntityPedestal extends TileEntity {
-
-    //World world = Minecraft.getMinecraft().theWorld;
 
     public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
