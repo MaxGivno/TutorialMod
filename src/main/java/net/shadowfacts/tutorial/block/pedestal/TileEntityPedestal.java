@@ -1,5 +1,6 @@
 package net.shadowfacts.tutorial.block.pedestal;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -17,19 +18,31 @@ import javax.annotation.Nullable;
 
 public class TileEntityPedestal extends TileEntity {
 
-    private static World world;
+    //World world = Minecraft.getMinecraft().theWorld;
 
     public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             if (!world.isRemote) {
-                lastChangeTime = worldObj.getTotalWorldTime();
+                lastChangeTime = world.getTotalWorldTime();
                 TutorialMod.network.sendToAllAround(new PacketUpdatePedestal(TileEntityPedestal.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
             }
         }
     };
 
     public long lastChangeTime;
+
+    @java.lang.Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
+    }
+
+    @Override
+    public void onLoad() {
+        if (world.isRemote) {
+            TutorialMod.network.sendToServer(new PacketRequestUpdatePedestal(this));
+        }
+    }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -53,17 +66,5 @@ public class TileEntityPedestal extends TileEntity {
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T)inventory : super.getCapability(capability, facing);
-    }
-
-    @Override
-    public void onLoad() {
-        if (world.isRemote) {
-            TutorialMod.network.sendToServer(new PacketRequestUpdatePedestal(this));
-        }
-    }
-
-    @java.lang.Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
     }
 }

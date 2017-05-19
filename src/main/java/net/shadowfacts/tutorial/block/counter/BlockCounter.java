@@ -28,7 +28,7 @@ public class BlockCounter extends BlockTileEntity<TileEntityCounter> {
             } else if (side == EnumFacing.UP) {
                 tile.incrementCount();
             }
-            player.addChatMessage(new TextComponentString("Count: " + tile.getCount()));
+            player.sendMessage(new TextComponentString("Count: " + tile.getCount()));
         }
         return true;
     }

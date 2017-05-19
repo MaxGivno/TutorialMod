@@ -25,7 +25,7 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
         blockHardness = 3;
     }
 
-    @Override
+    //@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             TileEntityProjectChest te = getTileEntity(world, pos);
@@ -48,9 +48,10 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
         for (int i = 0; i < itemHandler.getSlots(); ++i)
         {
             ItemStack stack = itemHandler.getStackInSlot(i);
-            if (stack != null) { // TODO: for 10.11 change this to !stack.isEmpty
+            if (!stack.isEmpty()) {
                 EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-                world.spawnEntityInWorld(item);
+                //world.spawnEntityInWorld(item);
+                world.spawnEntity(item);
             }
         }
         super.breakBlock(world, pos, state);
