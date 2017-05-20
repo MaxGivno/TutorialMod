@@ -1,10 +1,10 @@
 {
     "textures": {
-        "0": "tutorial:blocks/project_chest_sideNS",
-        "1": "tutorial:blocks/project_chest_sideEW",
+        "0": "tutorial:blocks/project_chest_side_ns",
+        "1": "tutorial:blocks/project_chest_side_ew",
         "2": "tutorial:blocks/project_chest_top",
         "3": "tutorial:blocks/project_chest_bottom",
-        "particle": "tutorial:blocks/project_chest_sideNS"
+        "particle": "tutorial:blocks/project_chest_side_ns"
     },
     "elements": [
         {

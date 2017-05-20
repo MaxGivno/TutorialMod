@@ -22,18 +22,18 @@ public class ModItems {
     public static ItemArmor copperBoots;
 
     public static void init() {
-        ingotCopper = register(new ItemOre("ingotCopper", "ingotCopper"));
+        ingotCopper = register(new ItemOre("ingot_copper", "ingot_copper"));
         cornSeed = register(new ItemCornSeed());
         corn = register(new ItemCorn());
-        copperSword = register(new ItemSword(TutorialMod.copperToolMaterial, "copperSword"));
-        copperPickaxe = register(new ItemPickaxe(TutorialMod.copperToolMaterial, "copperPickaxe"));
-        copperAxe = register(new ItemAxe(TutorialMod.copperToolMaterial, "copperAxe"));
-        copperShovel = register(new ItemShovel(TutorialMod.copperToolMaterial, "copperShovel"));
-        copperHoe = register(new ItemHoe(TutorialMod.copperToolMaterial, "copperHoe"));
-        copperHelmet = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.HEAD, "copperHelmet"));
-        copperChestplate = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.CHEST, "copperChestplate"));
-        copperLeggings = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.LEGS, "copperLeggings"));
-        copperBoots = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.FEET, "copperBoots"));
+        copperSword = register(new ItemSword(TutorialMod.copperToolMaterial, "copper_sword"));
+        copperPickaxe = register(new ItemPickaxe(TutorialMod.copperToolMaterial, "copper_pickaxe"));
+        copperAxe = register(new ItemAxe(TutorialMod.copperToolMaterial, "copper_axe"));
+        copperShovel = register(new ItemShovel(TutorialMod.copperToolMaterial, "copper_shovel"));
+        copperHoe = register(new ItemHoe(TutorialMod.copperToolMaterial, "copper_hoe"));
+        copperHelmet = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.HEAD, "copper_helmet"));
+        copperChestplate = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.CHEST, "copper_chestplate"));
+        copperLeggings = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.LEGS, "copper_leggings"));
+        copperBoots = register(new ItemArmor(TutorialMod.copperArmorMaterial, EntityEquipmentSlot.FEET, "copper_boots"));
     }
 
     private static <T extends Item> T register(T item) {

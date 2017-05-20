@@ -18,7 +18,9 @@ import net.shadowfacts.tutorial.client.TutorialTab;
 import net.shadowfacts.tutorial.gui.ModGuiHandler;
 import net.shadowfacts.tutorial.item.ModItems;
 import net.shadowfacts.tutorial.network.PacketRequestUpdatePedestal;
+import net.shadowfacts.tutorial.network.PacketRequestUpdateProjectChest;
 import net.shadowfacts.tutorial.network.PacketUpdatePedestal;
+import net.shadowfacts.tutorial.network.PacketUpdateProjectChest;
 import net.shadowfacts.tutorial.proxy.CommonProxy;
 import net.shadowfacts.tutorial.recipe.ModRecipes;
 import net.shadowfacts.tutorial.world.ModWorldGen;
@@ -26,37 +28,48 @@ import net.shadowfacts.tutorial.world.ModWorldGen;
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION, acceptedMinecraftVersions = ModInfo.MINECRAFT_VERSION)
 public class TutorialMod {
 
+    public static final String modId = ModInfo.MOD_ID;
+    public static final String name = ModInfo.MOD_NAME;
+    public static final String version = ModInfo.VERSION;
+
+    @Mod.Instance(modId)
+    public static TutorialMod instance;
+
+    @SidedProxy(serverSide = ModInfo.SERVER_SIDE_CLASS, clientSide = ModInfo.CLIENT_SIDE_CLASS)
+    public static CommonProxy proxy;
+
     public static final TutorialTab creativeTab = new TutorialTab();
     public static final Item.ToolMaterial copperToolMaterial = EnumHelper.addToolMaterial("COPPER", 2, 500, 6, 2, 14);
-    public static final ItemArmor.ArmorMaterial copperArmorMaterial = EnumHelper.addArmorMaterial("COPPER", ModInfo.MOD_ID + ":copper", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    public static SimpleNetworkWrapper network;
+    public static final ItemArmor.ArmorMaterial copperArmorMaterial = EnumHelper.addArmorMaterial("COPPER", modId + ":copper", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
-    @Mod.Instance(ModInfo.MOD_ID)
-    public static TutorialMod instance;
+    public static SimpleNetworkWrapper network;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        System.out.println(ModInfo.MOD_NAME + " is loading!");
+        System.out.println(name + " is loading!");
+
         ModBlocks.init();
         ModItems.init();
         GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MOD_ID);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+        proxy.registerRenderers();
+
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
+        network.registerMessage(new PacketUpdateProjectChest.Handler(), PacketUpdateProjectChest.class, 2, Side.CLIENT);
+        network.registerMessage(new PacketRequestUpdateProjectChest.Handler(), PacketRequestUpdateProjectChest.class, 3, Side.SERVER);
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModRecipes.init();
-        NetworkRegistry.INSTANCE.registerGuiHandler(TutorialMod.instance, new ModGuiHandler());
+
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
     }
-
-    @SidedProxy(serverSide = ModInfo.SERVER_SIDE_CLASS, clientSide = ModInfo.CLIENT_SIDE_CLASS)
-    public static CommonProxy proxy;
 
 }

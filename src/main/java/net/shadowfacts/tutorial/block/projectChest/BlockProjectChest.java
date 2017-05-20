@@ -13,20 +13,19 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.shadowfacts.tutorial.TutorialMod;
 import net.shadowfacts.tutorial.block.BlockTileEntity;
+import net.shadowfacts.tutorial.gui.ModGuiHandler;
 
 import javax.annotation.Nullable;
 
 public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
-
-    private static final int GUI_ID = 1;
 
     public BlockProjectChest() {
         super(Material.WOOD, "project_chest");
         blockHardness = 3;
     }
 
-    //@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             TileEntityProjectChest te = getTileEntity(world, pos);
 
@@ -34,7 +33,7 @@ public class BlockProjectChest extends BlockTileEntity<TileEntityProjectChest> {
                 return false;
             }
 
-            player.openGui(TutorialMod.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+            player.openGui(TutorialMod.instance, ModGuiHandler.PROJECT_CHEST, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return true;

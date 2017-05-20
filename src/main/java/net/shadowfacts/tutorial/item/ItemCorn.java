@@ -21,6 +21,6 @@ public class ItemCorn extends ItemFood implements ItemModelProvider, ItemOreDict
 
     @Override
     public void initOreDict() {
-        OreDictionary.registerOre("cropCorn", this);
+        OreDictionary.registerOre("crop_corn", this);
     }
 }

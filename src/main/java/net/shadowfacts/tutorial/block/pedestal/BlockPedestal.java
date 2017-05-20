@@ -16,6 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.shadowfacts.tutorial.TutorialMod;
 import net.shadowfacts.tutorial.block.BlockTileEntity;
+import net.shadowfacts.tutorial.gui.ModGuiHandler;
 
 import javax.annotation.Nullable;
 
@@ -45,11 +46,14 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         return PEDESTAL_AABB;
     }
 
-    //@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) { // On Server
             TileEntityPedestal tile = getTileEntity(world, pos); // Get TE
             IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side); // Attaching handler for inventory support
+
+            @Nullable
+            ItemStack heldItem = player.getHeldItem(hand);
 
             if (!player.isSneaking()) { // If not sneaking
                 if (heldItem.isEmpty()) { // with empty hand
@@ -59,14 +63,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
                 }
                 tile.markDirty(); // Update TE
             } else { // If sneaking
-                ItemStack stack = itemHandler.getStackInSlot(0); // Check what's in slot 0
-
-                if (!stack.isEmpty()) { // If smth in the slot
-                    String localized = TutorialMod.proxy.localize(stack.getUnlocalizedName() + ".name"); // Get name of item in the slot
-                    player.sendMessage(new TextComponentString(stack.getCount() + "x " + localized)); // Write to chat number of items in the slot
-                } else { // If slot is empty
-                    player.sendMessage(new TextComponentString("Empty")); // Write to chat that slot is empty
-                }
+                player.openGui(TutorialMod.instance, ModGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

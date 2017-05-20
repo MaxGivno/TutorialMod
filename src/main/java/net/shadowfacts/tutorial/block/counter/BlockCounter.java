@@ -19,8 +19,8 @@ public class BlockCounter extends BlockTileEntity<TileEntityCounter> {
         super(Material.ROCK, "counter");
     }
 
-    //@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             TileEntityCounter tile = getTileEntity(world, pos);
             if (side == EnumFacing.DOWN) {

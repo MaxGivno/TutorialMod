@@ -1,8 +1,10 @@
 package net.shadowfacts.tutorial.block.projectChest;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -11,88 +13,88 @@ import javax.annotation.Nullable;
 
 public class ContainerProjectChest extends Container {
 
-    private TileEntityProjectChest te;
+    public ContainerProjectChest(InventoryPlayer playerInv, final TileEntityProjectChest projectChest) {
+        IItemHandler inventory = projectChest.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
 
-    public ContainerProjectChest(IInventory playerInv, TileEntityProjectChest te) {
-        this.te = te;
-
-        addContainerSlots();
-        addPlayerSlots(playerInv);
-    }
-
-    private void addPlayerSlots(IInventory playerInventory) {
-        int deltaX = 8;
-        int deltaY = 140;
-
-        // Slots for the main inventory
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                int x = deltaX + col * 18;
-                int y = row * 18 + deltaY;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
-            }
-        }
-
-        // Slots for the hotbar
-        for (int row = 0; row < 9; ++row) {
-            int x = deltaX + row * 18;
-            int y = 58 + deltaY;
-            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-        }
-    }
-
-    private void addContainerSlots() {
-        IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int deltaX = 8;
-        int deltaY = 54;
-        int rowMax = (int) Math.floor(itemHandler.getSlots()/9);
-
-        // Add our container slots
         int slotIndex = 0;
 
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, 80, 18));
+        //Main slot
+        addSlotToContainer(new SlotItemHandler(inventory, 0, 80, 18) {
+            @Override
+            public void onSlotChanged() {
+                projectChest.markDirty();
+            }
+        });
+
         slotIndex++;
 
-        for (int row =0; row < rowMax; ++row) {
+        //Chest inventory slots
+        for (int row =0; row < 3; ++row) {
             for (int col =0; col < 9; ++col) {
-                int x = deltaX + col * 18;
-                int y = row * 18 + deltaY;
-                addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
+                int x = 8 + col * 18;
+                int y = row * 18 + 54;
+                addSlotToContainer(new SlotItemHandler(inventory, slotIndex, x, y) {
+                    @Override
+                    public void onSlotChanged() {
+                        projectChest.markDirty();
+                    }
+                });
                 slotIndex++;
             }
         }
-    }
 
-    @Nullable
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemstack = null;
-        Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-
-            if (index < this.te.getSize()) {
-                if (!this.mergeItemStack(itemstack1, this.te.getSize(), this.inventorySlots.size(), true)) {
-                    return null;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 0, this.te.getSize(), false)) {
-                return null;
-            }
-
-            if (itemstack1.getCount() == 0) {
-                slot.putStack(null);
-            } else {
-                slot.onSlotChanged();
+        // Player inventory
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
             }
         }
 
-        return itemstack;
+        //Player hotbar
+        for (int k = 0; k < 9; k++) {
+            addSlotToContainer(new Slot(playerInv, k, 8 + k * 18, 198));
+        }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return te.canInteractWith(playerIn);
+        return true;
     }
+
+    @Nullable
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemStack1 = slot.getStack();
+            itemStack = itemStack1.copy();
+
+            int containerSlots = inventorySlots.size() - player.inventory.mainInventory.size();
+            if (index < containerSlots) {
+                if (!this.mergeItemStack(itemStack1, containerSlots, inventorySlots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.mergeItemStack(itemStack1, 0, containerSlots,false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemStack1.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+
+            if (itemStack1.getCount() == itemStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, itemStack1);
+        }
+
+        return itemStack;
+    }
+
+
 }

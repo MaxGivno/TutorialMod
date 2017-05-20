@@ -1,12 +1,15 @@
 package net.shadowfacts.tutorial.block.projectChest;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.shadowfacts.tutorial.TutorialMod;
+import net.shadowfacts.tutorial.network.PacketRequestUpdateProjectChest;
+import net.shadowfacts.tutorial.network.PacketUpdateProjectChest;
 
 import javax.annotation.Nullable;
 
@@ -14,24 +17,36 @@ public class TileEntityProjectChest extends TileEntity {
 
     static final int SIZE = 37;
 
-    private ItemStackHandler inventory = new ItemStackHandler(SIZE) {
+    public ItemStackHandler inventory = new ItemStackHandler(SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
-            // We need to tell the tile entity that something has changed so
-            // that the chest contents is persisted
-            TileEntityProjectChest.this.markDirty();
+            if (!world.isRemote) {
+                lastChangeTime = world.getTotalWorldTime();
+                TutorialMod.network.sendToAllAround(new PacketUpdateProjectChest(TileEntityProjectChest.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+            }
         }
     };
+
+    public long lastChangeTime;
+
+    @Override
+    public void onLoad() {
+        if (world.isRemote) {
+            TutorialMod.network.sendToServer(new PacketRequestUpdateProjectChest(this));
+        }
+    }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("inventory", inventory.serializeNBT());
+        compound.setLong("lastChangeTime", lastChangeTime);
         return super.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+        lastChangeTime = compound.getLong("lastChangeTime");
         super.readFromNBT(compound);
     }
 
@@ -43,11 +58,6 @@ public class TileEntityProjectChest extends TileEntity {
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T)inventory : super.getCapability(capability, facing);
-    }
-
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        // If we are too far away from this tile entity you cannot use it
-        return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     public int getSize() {

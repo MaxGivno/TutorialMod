@@ -8,25 +8,25 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.shadowfacts.tutorial.block.pedestal.TileEntityPedestal;
+import net.shadowfacts.tutorial.block.projectChest.TileEntityProjectChest;
 
-public class PacketUpdatePedestal implements IMessage {
+public class PacketUpdateProjectChest implements IMessage {
 
     private BlockPos pos;
     private ItemStack stack;
     private long lastChangeTime;
 
-    public PacketUpdatePedestal(BlockPos pos, ItemStack stack, long lastChangeTime) {
+    public PacketUpdateProjectChest(BlockPos pos, ItemStack stack, long lastChangeTime) {
         this.pos = pos;
         this.stack = stack;
         this.lastChangeTime = lastChangeTime;
     }
 
-    public PacketUpdatePedestal(TileEntityPedestal te) {
+    public PacketUpdateProjectChest(TileEntityProjectChest te) {
         this(te.getPos(), te.inventory.getStackInSlot(0), te.lastChangeTime);
     }
 
-    public PacketUpdatePedestal() {}
+    public PacketUpdateProjectChest() {}
 
     @Override
     public void toBytes(ByteBuf buf) {
@@ -42,14 +42,14 @@ public class PacketUpdatePedestal implements IMessage {
         lastChangeTime = buf.readLong();
     }
 
-    public static class Handler implements IMessageHandler<PacketUpdatePedestal, IMessage> {
+    public static class Handler implements IMessageHandler<PacketUpdateProjectChest, IMessage> {
 
         @Override
-        public IMessage onMessage(PacketUpdatePedestal message, MessageContext ctx) {
+        public IMessage onMessage(PacketUpdateProjectChest message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-               TileEntityPedestal te = (TileEntityPedestal)Minecraft.getMinecraft().world.getTileEntity(message.pos);
-               te.inventory.setStackInSlot(0, message.stack);
-               te.lastChangeTime = message.lastChangeTime;
+                TileEntityProjectChest te = (TileEntityProjectChest)Minecraft.getMinecraft().world.getTileEntity(message.pos);
+                te.inventory.setStackInSlot(0, message.stack);
+                te.lastChangeTime = message.lastChangeTime;
             });
             return null;
         }

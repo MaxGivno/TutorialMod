@@ -8,6 +8,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.shadowfacts.tutorial.ModInfo;
 import net.shadowfacts.tutorial.block.pedestal.TESRPedestal;
 import net.shadowfacts.tutorial.block.pedestal.TileEntityPedestal;
+import net.shadowfacts.tutorial.block.projectChest.TESRProjectChest;
+import net.shadowfacts.tutorial.block.projectChest.TileEntityProjectChest;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -23,5 +25,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityProjectChest.class, new TESRProjectChest());
     }
 }

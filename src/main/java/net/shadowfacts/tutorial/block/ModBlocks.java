@@ -18,7 +18,7 @@ public class ModBlocks {
     public static BlockProjectChest projectChest;
 
     public static void init() {
-        oreCopper = register(new BlockOre("oreCopper", "oreCopper"));
+        oreCopper = register(new BlockOre("ore_copper", "ore_copper"));
         cropCorn = register(new BlockCropCorn(), null);
         pedestal = register(new BlockPedestal());
         counter = register(new BlockCounter());

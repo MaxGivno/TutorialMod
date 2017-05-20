@@ -1,4 +1,4 @@
-package net.shadowfacts.tutorial.block.pedestal;
+package net.shadowfacts.tutorial.block.projectChest;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,9 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
-public class TESRPedestal extends TileEntitySpecialRenderer <TileEntityPedestal> {
+public class TESRProjectChest extends TileEntitySpecialRenderer <TileEntityProjectChest> {
     @Override
-    public void renderTileEntityAt(TileEntityPedestal te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(TileEntityProjectChest te, double x, double y, double z, float partialTicks, int destroyStage) {
         ItemStack stack = te.inventory.getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.enableRescaleNormal();
