@@ -17,7 +17,7 @@ public class TESRPedestal extends TileEntitySpecialRenderer <TileEntityPedestal>
         ItemStack stack = te.inventory.getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.enableRescaleNormal();
-            GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
+            GlStateManager.alphaFunc(GL11.GL_GREATER, 0.9f);
             GlStateManager.enableBlend();
             RenderHelper.enableStandardItemLighting();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
