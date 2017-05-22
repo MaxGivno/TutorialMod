@@ -52,7 +52,6 @@ public class TutorialMod {
         ModItems.init();
         GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-        proxy.registerRenderers();
 
         network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
@@ -64,7 +63,7 @@ public class TutorialMod {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModRecipes.init();
-
+        proxy.registerRenderers();
     }
 
     @Mod.EventHandler

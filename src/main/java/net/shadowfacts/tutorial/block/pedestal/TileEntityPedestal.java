@@ -28,7 +28,7 @@ public class TileEntityPedestal extends TileEntity {
 
     public long lastChangeTime;
 
-    @java.lang.Override
+    @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
     }
